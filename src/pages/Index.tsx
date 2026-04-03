@@ -169,7 +169,7 @@ const Index = () => {
 </section>
 
       {/* Video Showcase */}
-      <section className="py-20 bg-white">
+      <section className="py-8 bg-white">
         <div className="max-w-7xl mx-auto px-5">
 
           {/* Heading */}
@@ -224,7 +224,7 @@ const Index = () => {
       </section>
 
       {/* Section */}
-      <section className="py-20 bg-white">
+      <section className="py-14 bg-white">
         <div className="max-w-6xl mx-auto px-5 text-center">
 
           <h2 className="text-3xl font-semibold mb-3 text-gray-800">
