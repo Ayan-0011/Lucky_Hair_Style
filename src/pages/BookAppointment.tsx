@@ -37,11 +37,18 @@ const BookAppointment = () => {
   const dateStr = selectedDate ? format(selectedDate, "yyyy-MM-dd") : "";
   const { data: bookedSlots = [] } = useBookedSlots(dateStr);
 
+
   const availableSlots = useMemo(() => {
     if (!settings || !dateStr) return [];
-    if (settings.closed_dates.includes(dateStr)) return [];
+
+    const isClosed = settings.closed_dates.includes(dateStr);
     const booked = new Set(bookedSlots);
-    return settings.available_slots.filter(s => !booked.has(s));
+
+    return settings.available_slots.map(slot => ({
+      time: slot,
+      isBooked: booked.has(slot),
+      isClosed: isClosed
+    }));
   }, [dateStr, bookedSlots, settings]);
 
   const nameError = nameTouched && name.trim().length === 0 ? "Name is required" : "";
@@ -187,16 +194,24 @@ const BookAppointment = () => {
                 <p className="text-center text-muted-foreground font-body">No available slots for this date.</p>
               ) : (
                 <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
-                  {availableSlots.map(t => (
+                  {availableSlots.map(slot => (
                     <button
-                      key={t}
-                      onClick={() => setSelectedTime(t)}
+                      key={slot.time}
+                      onClick={() => !slot.isBooked && setSelectedTime(slot.time)}
+                      disabled={slot.isBooked}
                       className={cn(
-                        "rounded-lg border px-3 py-2.5 text-sm font-medium transition-all hover:border-primary/50",
-                        selectedTime === t ? "border-primary bg-primary text-primary-foreground" : "bg-background"
+                        "rounded-lg border px-3 py-2.5 text-sm font-medium transition-all",
+
+                        slot.isBooked
+                          ? "bg-gray-200 text-gray-400 cursor-not-allowed border-gray-300 line-through"
+                          : "hover:border-primary/50",
+
+                        selectedTime === slot.time && !slot.isBooked
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "bg-background"
                       )}
                     >
-                      {formatTime12h(t)}
+                      {formatTime12h(slot.time)}
                     </button>
                   ))}
                 </div>

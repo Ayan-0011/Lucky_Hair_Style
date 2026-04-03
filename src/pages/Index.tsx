@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { ArrowRight, Clock, Instagram, Mail, MapPin, Phone, PhoneIncoming, Sparkles, Star, Youtube } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CustomerNav from "@/components/CustomerNav";
@@ -13,6 +13,7 @@ import "swiper/css/navigation";
 const Index = () => {
   const { data: services = [], isLoading } = useServices(true);
   const topServices = services.slice(0, 3);
+
 
   return (
     <div className="min-h-screen">
@@ -43,62 +44,129 @@ const Index = () => {
       </section>
 
       {/* Features */}
-      <section className="container py-20">
-        <div className="mb-12 text-center">
-          <h2 className="mb-3 text-3xl font-semibold">Why Choose Us</h2>
-          <p className="text-muted-foreground font-body">Premium care tailored to your unique style</p>
+      <section className="container py-24">
+        <div className="mb-16 text-center">
+          <h2 className="mb-4 text-4xl font-bold tracking-tight">
+            Why Choose Us
+          </h2>
+          <p className="text-muted-foreground font-body text-lg">
+            Premium care tailored to your unique style ✨
+          </p>
         </div>
-        <div className="grid gap-6 md:grid-cols-3">
+
+        <div className="grid gap-8 md:grid-cols-3">
           {[
-            { icon: Star, title: "Expert Stylists", desc: "Trained professionals with years of experience" },
-            { icon: Sparkles, title: "Premium Products", desc: "We use only the finest hair care products" },
-            { icon: Clock, title: "Flexible Hours", desc: "Open 7 days a week for your convenience" },
+            { icon: Star, title: "Expert Stylists", desc: "Professional Hair & Facial Artists✨" },
+            { icon: Sparkles, title: "Premium Products", desc: "Luxury products for flawless hair & skin " },
+            { icon: Clock, title: "Flexible Hours", desc: "Open 7 days for your convenience, Your Time, Your Style 🔥" },
           ].map((f, i) => (
-            <div key={i} className="group rounded-xl border bg-card p-8 text-center transition-all hover:shadow-lg hover:border-primary/30 animate-fade-in" style={{ animationDelay: `${0.1 * (i + 1)}s` }}>
-              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <f.icon className="h-5 w-5 text-primary" />
+            <div
+              key={i}
+              className="group relative overflow-hidden rounded-2xl border bg-card/60 backdrop-blur-md p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-primary/40 animate-fade-in"
+              style={{ animationDelay: `${0.15 * (i + 1)}s` }}
+            >
+              {/* Glow Effect */}
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 bg-gradient-to-br from-primary/10 via-transparent to-primary/10"></div>
+
+              {/* Icon */}
+              <div className="relative mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 text-white shadow-md group-hover:scale-110 transition">
+                <f.icon className="h-6 w-6" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold">{f.title}</h3>
-              <p className="text-sm text-muted-foreground font-body">{f.desc}</p>
+
+              {/* Title */}
+              <h3 className="relative mb-3 text-xl font-semibold tracking-wide">
+                {f.title}
+              </h3>
+
+              {/* Description */}
+              <p className="relative text-sm text-muted-foreground font-body leading-relaxed">
+                {f.desc}
+              </p>
+
+              {/* Bottom Accent Line */}
+              <div className="absolute bottom-0 left-0 h-[3px] w-0 bg-gradient-to-r from-yellow-400 to-yellow-600 transition-all duration-300 group-hover:w-full"></div>
             </div>
           ))}
         </div>
       </section>
 
+
       {/* Popular Services */}
-      <section className="border-t bg-secondary/30 py-20">
-        <div className="container">
-          <div className="mb-12 text-center">
-            <h2 className="mb-3 text-3xl font-semibold">Popular Services</h2>
-            <p className="text-muted-foreground font-body">Our most loved treatments</p>
-          </div>
-          {isLoading ? (
-            <div className="text-center text-muted-foreground">Loading services...</div>
-          ) : (
-            <div className="grid gap-6 md:grid-cols-3">
-              {topServices.map((s, i) => (
-                <div key={s.id} className="rounded-xl border bg-card p-6 transition-all hover:shadow-lg hover:border-primary/30 animate-fade-in" style={{ animationDelay: `${0.1 * (i + 1)}s` }}>
-                  <h3 className="mb-1 text-lg font-semibold">{s.name}</h3>
-                  <p className="mb-4 text-sm text-muted-foreground font-body">{s.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xl font-bold text-primary">₹{s.price}</span>
-                    <span className="flex items-center gap-1 text-sm text-muted-foreground">
-                      <Clock className="h-3.5 w-3.5" /> {s.duration} min
-                    </span>
-                  </div>
-                </div>
-              ))}
+<section className="relative border-t bg-gradient-to-br from-secondary/40 to-background py-24">
+  <div className="container">
+    
+    {/* Heading */}
+    <div className="mb-16 text-center">
+      <h2 className="mb-4 text-4xl font-bold tracking-tight">
+        Popular Services
+      </h2>
+      <p className="text-muted-foreground font-body text-lg">
+        Our most loved hair & skin treatments ✨
+      </p>
+    </div>
+
+    {isLoading ? (
+      <div className="text-center text-muted-foreground">
+        Loading services...
+      </div>
+    ) : (
+      <div className="grid gap-8 md:grid-cols-3">
+        {topServices.map((s, i) => (
+          <div
+            key={s.id}
+            className="group relative overflow-hidden rounded-2xl border bg-card/70 backdrop-blur-md p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-primary/40 animate-fade-in"
+            style={{ animationDelay: `${0.15 * (i + 1)}s` }}
+          >
+            {/* Glow Effect */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-300 bg-gradient-to-br from-primary/10 via-transparent to-primary/10"></div>
+
+            {/* Service Name */}
+            <h3 className="relative mb-2 text-xl font-semibold tracking-wide">
+              {s.name}
+            </h3>
+
+            {/* Description */}
+            <p className="relative mb-5 text-sm text-muted-foreground font-body leading-relaxed">
+              {s.description}
+            </p>
+
+            {/* Price + Time */}
+            <div className="relative flex items-center justify-between">
+              <span className="text-2xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
+                ₹{s.price}
+              </span>
+
+              <span className="flex items-center gap-1 text-sm text-muted-foreground">
+                <Clock className="h-4 w-4" /> {s.duration} min
+              </span>
             </div>
-          )}
-          <div className="mt-10 text-center">
-            <Link to="/services">
-              <Button variant="outline" className="gap-2">
-                View All Services <ArrowRight className="h-4 w-4" />
+
+            {/* Hover Button */}
+            <div className="mt-6 opacity-0 translate-y-4 opacity-100 translate-y-0 transition-all duration-300">
+              <Link to="/services">
+              <Button className="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 text-white hover:opacity-90">
+                Book Now
               </Button>
-            </Link>
+              </Link>
+            </div>
+
+            {/* Bottom Accent */}
+            <div className="absolute bottom-0 left-0 h-[3px] w-0 bg-gradient-to-r from-yellow-400 to-yellow-600 transition-all duration-300 group-hover:w-full"></div>
           </div>
-        </div>
-      </section>
+        ))}
+      </div>
+    )}
+
+    {/* View All Button */}
+    <div className="mt-14 text-center">
+      <Link to="/services">
+        <Button className="gap-2 bg-gradient-to-r from-yellow-400 to-yellow-600 text-white hover:opacity-90 px-6 py-2 rounded-full shadow-md">
+          View All Services <ArrowRight className="h-4 w-4" />
+        </Button>
+      </Link>
+    </div>
+  </div>
+</section>
 
       {/* Video Showcase */}
       <section className="py-20 bg-white">

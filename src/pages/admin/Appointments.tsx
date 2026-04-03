@@ -11,7 +11,7 @@ const openWhatsApp = (a: AppointmentWithService) => {
   const fullPhone = phone.startsWith("91") ? phone : `91${phone}`;
   const serviceName = a.services?.name || "your service";
   const msg = encodeURIComponent(
-    `Hello ${a.customer_name}, your appointment for ${serviceName} on ${a.date} at ${formatTime12h(a.time)} has been confirmed at Lucky Hair Style. Thank you!`
+    `Hello ${a.customer_name}, your appointment for ${serviceName} on ${a.date} at ${formatTime12h(a.time)} has been confirmed at Lucky Hair Style. Thank you for Appoinment! 😊`
   );
   window.open(`https://wa.me/${fullPhone}?text=${msg}`, "_blank");
 };

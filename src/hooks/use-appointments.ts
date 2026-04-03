@@ -56,7 +56,7 @@ export function useBookedSlots(date: string) {
         .from("appointments")
         .select("time")
         .eq("date", date)
-        .neq("status", "cancelled");
+        .eq("status", "confirmed");
       if (error) throw error;
       return data.map(d => d.time);
     },
