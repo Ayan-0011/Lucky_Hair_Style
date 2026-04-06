@@ -8,42 +8,39 @@ export function useAdminAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
-        const currentUser = session?.user ?? null;
-        setUser(currentUser);
+  let mounted = true;
 
-        if (currentUser?.email) {
-          const { data } = await supabase
-            .from("admins")
-            .select("id")
-            .eq("email", currentUser.email)
-            .maybeSingle();
-          setIsAdmin(!!data);
-        } else {
-          setIsAdmin(false);
-        }
-        setLoading(false);
-      }
-    );
+  const checkSession = async () => {
+    setLoading(true);
 
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      const currentUser = session?.user ?? null;
-      setUser(currentUser);
+    const { data: { session } } = await supabase.auth.getSession();
+    const currentUser = session?.user ?? null;
 
-      if (currentUser?.email) {
-        const { data } = await supabase
-          .from("admins")
-          .select("id")
-          .eq("email", currentUser.email)
-          .maybeSingle();
-        setIsAdmin(!!data);
-      }
-      setLoading(false);
-    });
+    if (!mounted) return;
 
-    return () => subscription.unsubscribe();
-  }, []);
+    setUser(currentUser);
+
+    if (currentUser?.email) {
+      const { data } = await supabase
+        .from("admins")
+        .select("id")
+        .eq("email", currentUser.email)
+        .maybeSingle();
+
+      setIsAdmin(!!data);
+    } else {
+      setIsAdmin(false);
+    }
+
+    if (mounted) setLoading(false);
+  };
+
+  checkSession();
+
+  return () => {
+    mounted = false;
+  };
+}, []);
 
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });

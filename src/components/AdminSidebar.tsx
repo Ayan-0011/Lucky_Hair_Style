@@ -37,7 +37,15 @@ export function AdminSidebar() {
       setOpenMobile(false);
     }
   };
-
+  
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut(); // 👈 ensure ye hi use ho
+      navigate("/"); // ya "/login"
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
+  };
   return (
     <Sidebar collapsible="icon" className="border-none">
       <SidebarContent className="bg-sidebar rounded-2xl m-2 shadow-lg flex flex-col">
@@ -69,11 +77,10 @@ export function AdminSidebar() {
                         to={item.url}
                         onClick={handleNavClick}
                         end={item.url === "/admin"}
-                        className={`rounded-xl px-3 py-2.5 transition-all duration-300 ease-in-out flex items-center gap-3 ${
-                          isActive
+                        className={`rounded-xl px-3 py-2.5 transition-all duration-300 ease-in-out flex items-center gap-3 ${isActive
                             ? "bg-sidebar-primary text-sidebar-primary-foreground font-medium shadow-md"
                             : "text-sidebar-foreground hover:bg-muted"
-                        }`}
+                          }`}
                         activeClassName=""
                       >
                         <item.icon className="h-5 w-5 shrink-0" />

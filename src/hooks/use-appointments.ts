@@ -31,6 +31,7 @@ export function useAppointments() {
       if (error) throw error;
       return data as AppointmentWithService[];
     },
+    refetchOnWindowFocus: true,
   });
 
   // Real-time subscription

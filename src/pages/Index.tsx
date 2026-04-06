@@ -169,7 +169,7 @@ const Index = () => {
 </section>
 
       {/* Video Showcase */}
-      <section className="py-8 bg-white">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-5">
 
           {/* Heading */}
@@ -322,7 +322,7 @@ const Index = () => {
         href="https://wa.me/917043124577?text=Hello%2C%20I%20want%20to%20book%20an%20appointment%20at%20Lucky%20Hair%20Style."
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-5 left-5 z-50 flex h-12 w-12 items-center justify-center rounded-full shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"
+        className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"
         style={{ backgroundColor: "#25D366" }}
         aria-label="Chat on WhatsApp"
       >

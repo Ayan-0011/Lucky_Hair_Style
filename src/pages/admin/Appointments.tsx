@@ -5,16 +5,43 @@ import { Badge } from "@/components/ui/badge";
 import { Check, X, RefreshCw } from "lucide-react";
 import { formatTime12h } from "@/lib/store";
 import { toast } from "sonner";
+import { useEffect } from "react";
+
+
+const formatDate = (dateStr: string) => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+};
 
 const openWhatsApp = (a: AppointmentWithService) => {
   const phone = a.customer_phone.replace(/\D/g, "");
   const fullPhone = phone.startsWith("91") ? phone : `91${phone}`;
   const serviceName = a.services?.name || "your service";
   const msg = encodeURIComponent(
-    `Hello ${a.customer_name}, your appointment for ${serviceName} on ${a.date} at ${formatTime12h(a.time)} has been confirmed at Lucky Hair Style. Thank you for Appoinment! 😊`
+    `Hello ${a.customer_name}, your appointment for ${serviceName} on ${formatDate(a.date)} at ${formatTime12h(a.time)} has been confirmed at Lucky Hair Style. Thank you for Appoinment! 😊`
   );
   window.open(`https://wa.me/${fullPhone}?text=${msg}`, "_blank");
 };
+
+const openCancelWhatsApp = (a: AppointmentWithService) => {
+  const phone = a.customer_phone.replace(/\D/g, "");
+  const fullPhone = phone.startsWith("91") ? phone : `91${phone}`;
+  const serviceName = a.services?.name || "your service";
+
+  const msg = encodeURIComponent(
+    `Hello ${a.customer_name}, 
+Due to some reason, your appointment for ${serviceName} on ${formatDate(a.date)} at ${formatTime12h(a.time)} has been cancelled. 
+Please book another suitable time slot. Sorry for the inconvenience 🙏
+– Lucky Hair Style`
+  );
+
+  window.open(`https://wa.me/${fullPhone}?text=${msg}`, "_blank");
+};
+
 
 const Appointments = () => {
   const { data: appointments = [], isLoading } = useAppointments();
@@ -78,7 +105,11 @@ const Appointments = () => {
                         </Button>
                       )}
                       {a.status !== "cancelled" && (
-                        <Button size="sm" variant="ghost" onClick={() => updateStatus.mutate({ id: a.id, status: "cancelled" })} title="Cancel">
+                        <Button size="sm" variant="ghost" onClick={() => updateStatus.mutate({ id: a.id, status: "cancelled" }, {
+                          onSuccess: () => {
+                            openCancelWhatsApp(a);
+                          },
+                        })} title="Cancel">
                           <X className="h-4 w-4 text-destructive" />
                         </Button>
                       )}
