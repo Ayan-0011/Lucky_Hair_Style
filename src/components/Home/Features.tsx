@@ -3,7 +3,7 @@ import { Clock, Sparkles, Star } from 'lucide-react'
 
 const Features = () => {
   return (
-    <section className="container py-24">
+    <section className="container py-16">
         <div className="mb-16 text-center">
           <h2 className="mb-4 text-4xl font-bold tracking-tight">
             Why Choose Us

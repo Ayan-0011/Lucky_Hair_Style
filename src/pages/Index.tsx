@@ -9,12 +9,39 @@ import Video_imgShowcase from "@/components/Home/Video_imgShowcase";
 import Footer_ from "@/components/Home/Footer_";
 import Whatpp from "@/components/Home/Whatpp";
 import Testimonials from "@/components/Home/Testimonials";
+import { motion } from "framer-motion";
 
 
 const Index = () => {
   const { data: services = [], isLoading } = useServices(true);
   const topServices = services.slice(0, 3);
 
+  const fadeUp = {
+    hidden: { opacity: 0, y: 60 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: "easeOut" },
+    },
+  };
+
+  const fadeLeft = {
+    hidden: { opacity: 0, x: -80 },
+    show: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8 },
+    },
+  };
+
+  const fadeRight = {
+    hidden: { opacity: 0, x: 80 },
+    show: {
+      opacity: 1,
+      x: 0,
+      transition: { duration: 0.8 },
+    },
+  };
 
   return (
     <div className="min-h-screen">
@@ -45,10 +72,21 @@ const Index = () => {
       </section>
 
       {/* Features */}
-      <Features />
+      <motion.div
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: false, amount: 0.1 }}
+      >
+        <Features />
+      </motion.div>
 
       {/* Popular Services */}
-      <section className="relative border-t bg-gradient-to-br from-secondary/40 to-background py-24">
+      <motion.section
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: false, amount: 0.2 }} className="relative border-t bg-gradient-to-br from-secondary/40 to-background py-24">
         <div className="container">
 
           {/* Heading */}
@@ -66,9 +104,13 @@ const Index = () => {
               Loading services...
             </div>
           ) : (
-            <div className="grid gap-8 md:grid-cols-3">
+             <motion.div
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              transition={{ staggerChildren: 0.2 }} className="grid gap-8 md:grid-cols-3">
               {topServices.map((s, i) => (
-                <div
+                <motion.div
                   key={s.id}
                   className="group relative overflow-hidden rounded-2xl border bg-card/70 backdrop-blur-md p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-primary/40 animate-fade-in"
                   style={{ animationDelay: `${0.15 * (i + 1)}s` }}
@@ -108,9 +150,9 @@ const Index = () => {
 
                   {/* Bottom Accent */}
                   <div className="absolute bottom-0 left-0 h-[3px] w-0 bg-gradient-to-r from-yellow-400 to-yellow-600 transition-all duration-300 group-hover:w-full"></div>
-                </div>
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           )}
 
           {/* View All Button */}
@@ -122,21 +164,41 @@ const Index = () => {
             </Link>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Video Showcase */}
-      <Video_imgShowcase />
+      <motion.div
+        variants={fadeRight}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: false, amount: 0.2 }}
+      >
+        <Video_imgShowcase />
+      </motion.div>
 
       {/* Testimonials */}
-      <Testimonials />
-
+      <motion.div
+        variants={fadeLeft}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: false, amount: 0.2 }}
+      >
+        <Testimonials />
+      </motion.div>
 
       {/* Floating WhatsApp Button */}
       <Whatpp />
 
 
       {/* Footer */}
-      <Footer_ />
+      <motion.div
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: false, amount: 0.2 }}
+      >
+        <Footer_ />
+      </motion.div>
 
     </div>
   );
