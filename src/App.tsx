@@ -16,6 +16,7 @@ import AdminCalendar from "./pages/admin/AdminCalendar";
 import ManageServices from "./pages/admin/ManageServices";
 import SalonSettings from "./pages/admin/SalonSettings";
 import NotFound from "./pages/NotFound";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -25,12 +26,14 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+      <ScrollToTop/>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/services" element={<Services />} />
           <Route path="/book" element={<BookAppointment />} />
           <Route path="/booking-confirmed" element={<BookingConfirmed />} />
           <Route path="/admin-login" element={<AdminLogin />} />
+
           <Route element={<ProtectedRoute />}>
             <Route path="/admin" element={<AdminLayout />}>
               <Route index element={<Dashboard />} />
@@ -40,6 +43,7 @@ const App = () => (
               <Route path="settings" element={<SalonSettings />} />
             </Route>
           </Route>
+          
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

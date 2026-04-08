@@ -38,7 +38,7 @@ const Index = () => {
     hidden: { opacity: 0, y: 40 },
     show: {
       opacity: 1,
-      x: 0,
+      y: 40,
       transition: { duration: 0.8 },
     },
   };
