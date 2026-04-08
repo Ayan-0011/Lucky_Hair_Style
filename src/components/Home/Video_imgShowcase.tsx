@@ -43,7 +43,7 @@ const Video_imgShowcase = () => {
                     {/* Scroll Container */}
                     <div className="flex gap-4 overflow-x-auto pb-4 no-scrollbar">
 
-                        {[v1, v2, v3, v4, v5, v6, v7, v8].map((video, i) => (
+                        {[v8, v1, v2, v3, v4, v5, v6, v7].map((video, i) => (
                             <div
                                 key={i}
                                 className="min-w-[140px] md:min-w-[180px] h-[260px] md:h-[320px] 

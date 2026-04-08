@@ -35,7 +35,7 @@ const Index = () => {
   };
 
   const fadeRight = {
-    hidden: { opacity: 0, x: 80 },
+    hidden: { opacity: 0, y: 40 },
     show: {
       opacity: 1,
       x: 0,
@@ -48,7 +48,7 @@ const Index = () => {
       <CustomerNav />
 
       {/* Hero */}
-      <section className="relative overflow-hidden ">
+      <section className="relative overflow-hidden">
         <div className="absolute inset-0">
           <img src={heroImage} alt="Lucky hair studio interior" className="h-full w-full object-cover" fetchPriority="high" />
           <div className="absolute inset-0 bg-gradient-to-r from-foreground/70 to-foreground/30" />
@@ -76,7 +76,7 @@ const Index = () => {
         variants={fadeUp}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: false, amount: 0.1 }}
+        viewport={{ once: false, amount: 0.2 }}
       >
         <Features />
       </motion.div>
@@ -104,13 +104,14 @@ const Index = () => {
               Loading services...
             </div>
           ) : (
-             <motion.div
+            <motion.div
+              style={{ overflow: "hidden" }}
               initial="hidden"
               whileInView="show"
               viewport={{ once: true }}
               transition={{ staggerChildren: 0.2 }} className="grid gap-8 md:grid-cols-3">
               {topServices.map((s, i) => (
-                <motion.div
+                <div
                   key={s.id}
                   className="group relative overflow-hidden rounded-2xl border bg-card/70 backdrop-blur-md p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:border-primary/40 animate-fade-in"
                   style={{ animationDelay: `${0.15 * (i + 1)}s` }}
@@ -150,7 +151,7 @@ const Index = () => {
 
                   {/* Bottom Accent */}
                   <div className="absolute bottom-0 left-0 h-[3px] w-0 bg-gradient-to-r from-yellow-400 to-yellow-600 transition-all duration-300 group-hover:w-full"></div>
-                </motion.div>
+                </div>
               ))}
             </motion.div>
           )}
@@ -167,14 +168,17 @@ const Index = () => {
       </motion.section>
 
       {/* Video Showcase */}
+
       <motion.div
         variants={fadeRight}
         initial="hidden"
         whileInView="show"
         viewport={{ once: false, amount: 0.2 }}
+        className="overflow-hidden"
       >
         <Video_imgShowcase />
       </motion.div>
+
 
       {/* Testimonials */}
       <motion.div
