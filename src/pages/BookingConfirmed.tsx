@@ -9,6 +9,13 @@ const BookingConfirmed = () => {
   const data = location.state as { service: string; date: string; time: string; name: string } | null;
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigate("/")
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [navigate])
 
   return (
     <div className="min-h-screen">
