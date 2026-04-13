@@ -191,7 +191,7 @@ const Index = () => {
       </motion.div>
 
       {/* Floating WhatsApp Button */}
-      <Whatpp />
+      <Whatpp number={"916359139911"} message={"Hello, I want to book an appointment at Lucky Hair Style."}/>
 
 
       {/* Footer */}

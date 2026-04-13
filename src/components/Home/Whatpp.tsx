@@ -1,10 +1,12 @@
 import React from 'react'
 
-const Whatpp = () => {
+const Whatpp = ({ number, message }) => {
+  const url = `https://wa.me/${number}?text=${encodeURIComponent(message)}`
+
   return (
     <div>
       <a
-        href="https://wa.me/917043124577?text=Hello%2C%20I%20want%20to%20book%20an%20appointment%20at%20Lucky%20Hair%20Style."
+        href={url}
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-5 right-5 z-50 flex h-12 w-12 items-center justify-center rounded-full shadow-lg transition-all duration-300 hover:scale-110 hover:shadow-xl"

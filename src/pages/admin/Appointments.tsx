@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Check, X, RefreshCw } from "lucide-react";
 import { formatTime12h } from "@/lib/store";
 import { toast } from "sonner";
-import { useEffect } from "react";
 
 
 const formatDate = (dateStr: string) => {
@@ -22,8 +21,16 @@ const openWhatsApp = (a: AppointmentWithService) => {
   const fullPhone = phone.startsWith("91") ? phone : `91${phone}`;
   const serviceName = a.services?.name || "your service";
   const msg = encodeURIComponent(
-    `Hello ${a.customer_name}, your appointment for ${serviceName} on ${formatDate(a.date)} at ${formatTime12h(a.time)} has been confirmed at Lucky Hair Style. Thank you for Appoinment! 😊`
-  );
+   `Hello *${a.customer_name}* 👋,
+
+Your appointment has been *CONFIRMED* ✅
+
+💇 Service: *${serviceName}*
+📅 Date: *${formatDate(a.date)}*
+⏰ Time: *${formatTime12h(a.time)}*
+
+Thank you for choosing *Lucky Hair Style* 😊`
+);
   window.open(`https://wa.me/${fullPhone}?text=${msg}`, "_blank");
 };
 
@@ -33,12 +40,18 @@ const openCancelWhatsApp = (a: AppointmentWithService) => {
   const serviceName = a.services?.name || "your service";
 
   const msg = encodeURIComponent(
-    `Hello ${a.customer_name}, 
-Due to some reason, your appointment for ${serviceName} on ${formatDate(a.date)} at ${formatTime12h(a.time)} has been cancelled. 
-Please book another suitable time slot. Sorry for the inconvenience 🙏
-– Lucky Hair Style`
-  );
+   `Hello *${a.customer_name}*,
 
+Your appointment for *${serviceName}* has been *CANCELLED* ❌
+
+📅 Date: *${formatDate(a.date)}*
+⏰ Time: *${formatTime12h(a.time)}*
+
+Sorry for the inconvenience 🙏  
+Please book another time.
+
+*Lucky Hair Style*`
+);
   window.open(`https://wa.me/${fullPhone}?text=${msg}`, "_blank");
 };
 

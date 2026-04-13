@@ -1,11 +1,14 @@
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import CustomerNav from "@/components/CustomerNav";
+import { useEffect } from "react";
 
 const BookingConfirmed = () => {
   const location = useLocation();
   const data = location.state as { service: string; date: string; time: string; name: string } | null;
+  const navigate = useNavigate();
+
 
   return (
     <div className="min-h-screen">

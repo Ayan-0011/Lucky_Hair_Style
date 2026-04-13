@@ -176,7 +176,7 @@ const BookAppointment = () => {
                   onSelect={(d) => { setSelectedDate(d); setSelectedTime(""); }}
                   disabled={(date) => {
                     const d = format(date, "yyyy-MM-dd");
-                    return date < new Date(new Date().setHours(0, 0, 0, 0)) || settings.closed_dates.includes(d);
+                    return date <= new Date(new Date().setHours(0, 0, 0, 0)) || settings.closed_dates.includes(d);
                   }}
                   className="pointer-events-auto"
                 />

@@ -1,5 +1,6 @@
 import { Clock, Instagram, Mail, MapPin, Phone, Youtube } from 'lucide-react'
 import React from 'react'
+import iglogo from '../../assets/insta_logo.png'
 
 const Footer_ = () => {
   return (
@@ -27,7 +28,7 @@ const Footer_ = () => {
 
                 <div className="flex items-center gap-3 hover:text-yellow-400 transition">
                   <Mail size={16} />
-                  <span>info@luckyhairstyle.com</span>
+                  <span>luckyhairstyle77@gmail.com</span>
                 </div>
 
                 <div className="flex items-center gap-3 hover:text-yellow-400 transition">
@@ -66,10 +67,10 @@ const Footer_ = () => {
                   <a
                     href="https://www.instagram.com/lucky_hairstyle_/"
                     className="p-3 rounded-full text-white border border-white/10 
-                    bg-gradient-to-r from-pink-700 via-purple-500 to-yellow-300
                     hover:scale-110 transition duration-300"
                   >
-                    <Instagram size={22} />
+                    {/* <Instagram size={22} /> */}
+                    <img src={iglogo} alt="insta logo" className='h-7 w-7' />
                   </a>
 
                   <a
@@ -79,7 +80,7 @@ const Footer_ = () => {
                     hover:shadow-lg hover:shadow-red-500/30 
                     transition duration-300"
                   >
-                    <Youtube size={22} />
+                    <Youtube size={28} />
                   </a>
                 </div>
               </div>
@@ -96,7 +97,7 @@ const Footer_ = () => {
 
           {/* Divider */}
           <div className="border-t border-white/10 mt-10 pt-5 text-center text-xs text-gray-500">
-            © 2026 Lucky Hair Studio. All rights reserved.
+            © 2026 Lucky Hair Style. All rights reserved.
           </div>
 
         </div>
