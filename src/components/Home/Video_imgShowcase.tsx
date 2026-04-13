@@ -83,7 +83,7 @@ const Video_imgShowcase = () => {
                         Our Work
                     </h2>
                     <p className="text-gray-500 mb-10">
-                        A glimpse of our styling excellence
+                     Explore Our Styles 😎
                     </p>
 
                     <Swiper
