@@ -28,12 +28,12 @@ const Footer_ = () => {
 
                 <div className="flex items-center gap-3 hover:text-yellow-400 transition">
                   <Mail size={16} />
-                  <span>luckyhairstyle77@gmail.com</span>
+                  <span>Khalifaaadil8080@gmail.com</span>
                 </div>
 
                 <div className="flex items-center gap-3 hover:text-yellow-400 transition">
                   <Clock size={16} />
-                  <span>Mon - Sat: 10AM - 8PM</span>
+                  <span>Everyday</span>
                 </div>
 
               </div>
