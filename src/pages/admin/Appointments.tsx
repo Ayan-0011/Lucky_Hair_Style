@@ -21,7 +21,7 @@ const openWhatsApp = (a: AppointmentWithService) => {
   const fullPhone = phone.startsWith("91") ? phone : `91${phone}`;
   const serviceName = a.services?.name || "your service";
   const msg = encodeURIComponent(
-   `Hello *${a.customer_name}* 👋,
+    `Hello *${a.customer_name}* 👋,
 
 Your appointment has been *CONFIRMED* ✅
 
@@ -30,7 +30,7 @@ Your appointment has been *CONFIRMED* ✅
 ⏰ Time: *${formatTime12h(a.time)}*
 
 Thank you for choosing *Lucky Hair Style* 😊`
-);
+  );
   window.open(`https://wa.me/${fullPhone}?text=${msg}`, "_blank");
 };
 
@@ -40,7 +40,7 @@ const openCancelWhatsApp = (a: AppointmentWithService) => {
   const serviceName = a.services?.name || "your service";
 
   const msg = encodeURIComponent(
-   `Hello *${a.customer_name}*,
+    `Hello *${a.customer_name}*,
 
 Your appointment for *${serviceName}* has been *CANCELLED* ❌
 
@@ -51,7 +51,7 @@ Sorry for the inconvenience 🙏
 Please book another time.
 
 *Lucky Hair Style*`
-);
+  );
   window.open(`https://wa.me/${fullPhone}?text=${msg}`, "_blank");
 };
 
@@ -65,6 +65,7 @@ const Appointments = () => {
       pending: "bg-warning/10 text-warning border-warning/30",
       confirmed: "bg-success/10 text-success border-success/30",
       cancelled: "bg-destructive/10 text-destructive border-destructive/30",
+      completed: "bg-blue-100 text-blue-600 border-blue-300",
     };
     return <Badge variant="outline" className={variants[status]}>{status}</Badge>;
   };
@@ -104,34 +105,61 @@ const Appointments = () => {
                   <TableCell>{formatTime12h(a.time)}</TableCell>
                   <TableCell>{statusBadge(a.status)}</TableCell>
                   <TableCell className="text-right">
-                    <div className="flex justify-end gap-1">
-                      {a.status !== "confirmed" && (
-                        <Button size="sm" variant="ghost" onClick={() => {
-                          updateStatus.mutate({ id: a.id, status: "confirmed" }, {
+                    {a.status === "completed" && (
+                      <span className="text-md text-muted-foreground">
+                        Service Done✔️
+                      </span>
+                    )}
+                    {a.status !== "completed" && (
+                      <div className="flex justify-end gap-1">
+                        {a.status !== "confirmed" && (
+                          <Button size="sm" variant="ghost" onClick={() => {
+                            updateStatus.mutate({ id: a.id, status: "confirmed" }, {
+                              onSuccess: () => {
+                                openWhatsApp(a);
+                                toast.success("Appointment confirmed — WhatsApp message opened");
+                              },
+                            });
+                          }} title="Confirm">
+                            <Check className="h-4 w-4 text-success" />
+                          </Button>
+                        )}
+                        {a.status !== "cancelled" && (
+                          <Button size="sm" variant="ghost" onClick={() => updateStatus.mutate({ id: a.id, status: "cancelled" }, {
                             onSuccess: () => {
-                              openWhatsApp(a);
-                              toast.success("Appointment confirmed — WhatsApp message opened");
+                              openCancelWhatsApp(a);
                             },
-                          });
-                        }} title="Confirm">
-                          <Check className="h-4 w-4 text-success" />
-                        </Button>
-                      )}
-                      {a.status !== "cancelled" && (
-                        <Button size="sm" variant="ghost" onClick={() => updateStatus.mutate({ id: a.id, status: "cancelled" }, {
-                          onSuccess: () => {
-                            openCancelWhatsApp(a);
-                          },
-                        })} title="Cancel">
-                          <X className="h-4 w-4 text-destructive" />
-                        </Button>
-                      )}
-                      {a.status !== "pending" && (
-                        <Button size="sm" variant="ghost" onClick={() => updateStatus.mutate({ id: a.id, status: "pending" })} title="Reset to pending">
-                          <RefreshCw className="h-4 w-4 text-muted-foreground" />
-                        </Button>
-                      )}
-                    </div>
+                          })} title="Cancel">
+                            <X className="h-4 w-4 text-destructive" />
+                          </Button>
+                        )}
+                        {a.status !== "pending" && (
+                          <Button size="sm" variant="ghost" onClick={() => updateStatus.mutate({ id: a.id, status: "pending" })} title="Reset to pending">
+                            <RefreshCw className="h-4 w-4 text-muted-foreground" />
+                          </Button>
+                        )}
+                        {a.status === "confirmed" && (
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() =>
+                              updateStatus.mutate({ id: a.id, status: "completed" }, {
+                                onSuccess: () => {
+                                  toast.success("Service completed successfully");
+                                },
+                              })
+                            }
+                            title="Mark as Completed"
+                          >
+                            ✅
+
+                          </Button>
+
+
+                        )}
+
+                      </div>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
